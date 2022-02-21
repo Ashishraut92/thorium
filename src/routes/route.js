@@ -1,9 +1,13 @@
+let logger = require('./logger/logger')
 const express = require('express');
-
 const router = express.Router();
+let formatter = require("./validator/formatter")
+let helper = require("./util/helper")
 
 router.get('/test-me', function (req, res) {
-    res.send('My first ever api!')
+    logger.welcome()
+    formatter.val()
+    helper.printdate()
 });
 
 module.exports = router;
