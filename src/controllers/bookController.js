@@ -18,19 +18,13 @@ const getBooksData= async function (req, res) {
     res.send({msg: allBooks})
 }
 
-// const booklist = async function(req, res){
-//     let allList= await BookModel.find()
-//     res.send({msg: booklist})
-// }
 
 const getBooksinYear = async function(req, res){
     // let book=req.body
-    let Name = req.query.authorName
-    let year = req.query.year
+    let year = req.body.year
     
-    // let booksyear= await BookModel.find( { authorName : "Chetan Bhagat" } )
 
-    let booksyear = await BookModel.find( { $or: [ {authorName : "robert cialdini" } , {  "year": 2021 }]} )
+    let booksyear = await BookModel.find({year} )
     // let booksyear= await BookModel.find()
     res.send({msg: booksyear})
 }
@@ -38,7 +32,8 @@ const getBooksinYear = async function(req, res){
 const getXINRBooks = async function(req, res){
     // let booksvalue= await BookModel.find()
     
-    let booksvalue= await BookModel.find({ prices: {indianPrice: 100 }})
+    let booksvalue= await BookModel.find({$or: [ {"prices.indianPrice": "INR100" } ,{"prices.indianPrice": "INR200"} ,{"prices.indianPrice": "INR500" } ]})
+
     // { 
     //     $or: [ {authorName : "Chetan Bhagat" } , { isPublished: true } , {  "year": 1991 }]
     res.send({msg: booksvalue})
@@ -50,12 +45,23 @@ const getRandombooks = async function(req, res){
 
     // let random= await BookModel.find()
     res.send({msg: random})
+    
+}
+
+const  getPericularbook= async function(req, res){
+    // let book=req.body
+    let data = req.body
+    
+
+    let perticular = await BookModel.find( data )
+    // let booksyear= await BookModel.find()
+    res.send({msg: perticular})
 }
 
 module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
-// module.exports.booklist= booklist
+module.exports.getPericularbook= getPericularbook
 
-// module.exports.getBooksinYear= getBooksinYear
+module.exports.getBooksinYear= getBooksinYear
 module.exports.getXINRBooks= getXINRBooks
 module.exports.getRandombooks= getRandombooks
