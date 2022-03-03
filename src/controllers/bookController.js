@@ -1,24 +1,55 @@
 const { count } = require("console")
 const authorModel = require("../models/authorModel")
 const bookModel= require("../models/bookModel")
+const publisherModel = require("../models/publisherModel")
 
-const createBook= async function (req, res) {
+const newBook= async function (req, res) {
     let book = req.body
-    let bookCreated = await bookModel.create(book)
-    res.send({data: bookCreated})
+    console.log(book)
+    let authorId = book.author
+    let publisherId = book.publisher
+    let authorfromrequest = await authorModel.findById(authorId);
+    let publisherfromrequest = await publisherModel.findById(publisherId);
+
+    //validation a
+    if(!authorfromrequest || !publisherfromrequest){
+        res.send('the author or publisher  id is invalid')
+    } else{
+        let bookcreated = await bookModel.create(book)
+        res.send({data:bookcreated})
+    }
+
+    // if(!authorId) {
+    //     return res.send('The request is not valid as the author details are required.')
+    // }
+
+    // //validation b
+    // let author = await authorModel.findById(authorId)
+    // console.log(author)
+    // if(!author){ 
+    //     return res.send('The request is not valid as no author is present with the given author id')
+    // }
+
+    // //validation c
+    // if(!publisherId){
+    //      return res.send('The request is not valid as the publisher details are required.') 
+    // }
+    // //validation d
+    // let publisher = await publisherModel.findById(publisherId)
+    // if(!publisher) {
+    //     return res.send('The request is not valid as no publisher is present with the given publisher id')
+    // }
+    // let bookCreated = await bookModel.create(book)
+    // return res.send({data: bookCreated})
 }
 
-const getBooksData= async function (req, res) {
-    let books = await bookModel.find()
+const getBooksdata= async function (req, res) {
+    let books = await bookModel.find().populate('newauthor', 'newpublisher')
     res.send({data: books})
 }
 
-const getBooksWithAuthorDetails = async function (req, res) {
-    let specificBook = await bookModel.find().populate('author_id')
-    res.send({data: specificBook})
 
-}
+module.exports.newBook= newBook
+module.exports.getBooksdata= getBooksdata
 
-module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
-module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
+
