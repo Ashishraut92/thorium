@@ -12,7 +12,7 @@ router.get("/test-me", function (req, res) {
 
 router.post("/newBook", bookController.newBook  )
 
-router.post("/newAuthor", authorController.newAuthor)
+router.post("/createAuthor", authorController.createAuthor)
 
 router.post("/createPublisher", publisherController.createPublisher)
 
@@ -21,6 +21,8 @@ router.post("/createPublisher", publisherController.createPublisher)
 // router.post("/createBook", bookController.createBook  )
 
 router.get("/getBooksData", bookController.getBooksdata)
+
+router.put("/updateBook", bookController.updateBook)
 
 // router.get("/getBooksWithAuthorDetails", bookController.getBooksWithAuthorDetails)
 
