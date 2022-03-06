@@ -18,21 +18,21 @@ const getBooksData= async function (req, res) {
 
 const updateBooks= async function (req, res) {
     let data = req.body // {sales: "1200"}
-    // let allBooks= await BookModel.updateMany( 
-    //     { author: "SK"} , //condition
-    //     { $set: data } //update in data
-    //  )
-    let allBooks= await BookModel.findOneAndUpdate( 
-        { authorName: "ABC"} , //condition
-        { $set: data }, //update in data
-        { new: true , upsert: true} ,// new: true - will give you back the updated document // Upsert: it finds and updates the document but if the doc is not found(i.e it does not exist) then it creates a new document i.e UPdate Or inSERT  
+    let allBooks= await BookModel.updateMany( 
+        { author: "SK"} , //condition
+        { $set: data } //update in data
      )
+//     let allBooks= await BookModel.findOneAndUpdate( 
+//         { authorName: "ABC"} , //condition
+//         { $set: data }, //update in data
+//         { new: true , upsert: true} ,// new: true - will give you back the updated document // Upsert: it finds and updates the document but if the doc is not found(i.e it does not exist) then it creates a new document i.e UPdate Or inSERT  
+//      )
      
-     res.send( { msg: allBooks})
+//      res.send( { msg: allBooks})
 }
 
 const deleteBooks= async function (req, res) {
-    // let data = req.body 
+    let data = req.body 
     let allBooks= await BookModel.updateMany( 
         { authorName: "FI"} , //condition
         { $set: {isDeleted: true} }, //update in data
@@ -57,3 +57,4 @@ module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
 module.exports.updateBooks= updateBooks
 module.exports.deleteBooks= deleteBooks
+// 
