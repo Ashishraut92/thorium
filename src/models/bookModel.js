@@ -11,6 +11,7 @@ const bookSchema = new mongoose.Schema({
     
     bookCover : {
         type: String,
+        require: true
     },
 
     excerpt: {

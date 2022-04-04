@@ -35,9 +35,9 @@ const createBook = async (req, res) => {
         if (!validate.isValid(excerpt)) {
             return res.status(400).send({ status: false, message: "Excerpt Is Requird" })
         }
-        if (!validate.isValidISBN(ISBN.trim())) {
-            return res.status(400).send({ status: false, message: "Invalid ISBN Enterd" })
-        }
+        // if (!validate.isValidISBN(ISBN.trim())) {
+        //     return res.status(400).send({ status: false, message: "Invalid ISBN Enterd" })
+        // }
         const duplicateISBN = await bookModel.findOne({ ISBN: req.body.ISBN })
         if (duplicateISBN) {
             return res.status(400).send({ status: false, message: "ISBN is already present" })
